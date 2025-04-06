@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pokémon Explorer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #d1f2eb);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    #description {
+      color: #34495e;
+      font-size: 18px;
+      max-width: 600px;
+      margin-bottom: 30px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    #searchBox {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    input, button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    input {
+      width: 200px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    button {
+      background-color: #1abc9c;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #16a085;
+    }
+
+    #result {
+      max-width: 500px;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    img {
+      height: 150px;
+      margin-bottom: 10px;
+    }
+
+    .type-tag {
+      display: inline-block;
+      background: #e67e22;
+      color: white;
+      border-radius: 8px;
+      padding: 5px 10px;
+      margin: 0 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pokémon Explorer</h1>
+  <p id="description">
+    A simple cloud project using <strong>Express.js</strong>, <strong>AWS DynamoDB</strong>, and the <strong>PokéAPI</strong>.<br>
+    Search for your favorite Pokémon, view stats, and save them to the cloud!
+  </p>
+
+  <div id="searchBox">
+    <input type="text" id="pokeName" placeholder="Enter Pokémon name" />
+    <button onclick="searchPokemon()">Search</button>
+  </div>
+  <div id="result"></div>
+
+  <script>
+    async function searchPokemon() {
+      const name = document.getElementById('pokeName').value;
+      const res = await fetch(`/pokemon/${name}`);
+      const data = await res.json();
+      const resultBox = document.getElementById('result');
+
+      if (data.sprite) {
+        resultBox.innerHTML = `
+          <h2>\${data.name.toUpperCase()}</h2>
+          <img src="\${data.sprite}" />
+          <div>\${data.types.map(t => '<span class="type-tag">' + t.type.name + '</span>').join('')}</div>
+          <p><strong>Stats:</strong><br>
+            \${data.stats.map(s => s.stat.name + ': ' + s.base_stat).join('<br>')}
+          </p>
+        `;
+      } else {
+        resultBox.innerHTML = '<p style="color:red">' + data.message + '</p>';
+      }
+    }
+  </script>
+</body>
+</html>
