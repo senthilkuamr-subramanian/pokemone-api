@@ -1,0 +1,24 @@
+{
+    "name": "pokemon-aws-express",
+    "version": "1.0.0",
+    "description": "A mini cloud project using Express.js, AWS DynamoDB, and the PokéAPI.",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js",
+      "dev": "nodemon index.js"
+    },
+    "keywords": ["pokemon", "express", "aws", "dynamodb", "pokeapi"],
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+      "axios": "^1.6.7",
+      "cors": "^2.8.5",
+      "dotenv": "^16.4.5",
+      "express": "^4.18.3",
+      "aws-sdk": "^2.1491.0"
+    },
+    "devDependencies": {
+      "nodemon": "^3.1.0"
+    }
+  }
+  
